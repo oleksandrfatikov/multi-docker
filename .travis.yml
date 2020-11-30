@@ -1,0 +1,23 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t portasanych/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true portasanych/react-test npm test
+
+after_success:
+  - docker build -t portasanych/multi-client ./client
+  - docker build -t portasanych/multi-server ./server
+  - docker build -t portasanych/multi-nginx ./nginx
+  - docker build -t portasanych/multi-worker ./worker
+  # Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take those images and push them to the docker hub
+  - docker push portasanych/multi-client
+  - docker push portasanych/multi-nginx
+  - docker push portasanych/multi-server
+  - docker push portasanych/multi-worker
+
