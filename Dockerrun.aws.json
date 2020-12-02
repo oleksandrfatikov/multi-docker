@@ -25,14 +25,6 @@
     },
 
     {
-      "name": "worker",
-      "image": "portasanych/multi-worker",
-      "hostname": "worker",
-      "essential": false,
-      "memory": 128
-    },
-
-    {
       "name": "nginx",
       "image": "portasanych/multi-nginx",
       "essential": true,
