@@ -12,7 +12,7 @@ services:
     restart: always
     ports:
       - '3050:80'
-  
+      -
   postgres:
     image: "postgres:latest"
     environment:
